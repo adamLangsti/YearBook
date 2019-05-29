@@ -1,65 +1,46 @@
 package com.example.yearbook;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.yearbook.FragmentClass.MESSAGE;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnInfo;
-    
-    private class FragmentClassAdapter extends FragmentPagerAdapter {
-
-        private List<Fragment> fragments;
-
-        public FragmentClassAdapter(FragmentManager fm, List<Fragment> fragments) {
-            super(fm);
-            this.fragments = fragments;
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-
-            return this.fragments.get(i);
-        }
-
-        @Override
-        public int getCount() {
-
-            return this.fragments.size();
-        }
-    }
-
     FragmentClassAdapter pagerAdapter;
+    int currentPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnInfo = new Button(this);
+        btnInfo = (Button) findViewById(R.id.btnInfo);
 
-        btnInfo.setOnClickListener(new btnInfoClick());
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra("ID",currentPage);
+                startActivity(intent);
+            }
+        });
 
-
-        Intent intent = new Intent(this, DetailActivity.class);
-
-        String message = editText.getText().toString();
-        intent.putExtra(MESSAGE, message);
-        startActivity(intent);
-
-
-
-        List<Fragment> fragmentList = new ArrayList<Fragment>();
+        final List<Fragment> fragmentList = new ArrayList<Fragment>();
 
         fragmentList.add(FragmentClass.newInstance("Adriana Larsson", R.drawable.adriana));
         fragmentList.add(FragmentClass.newInstance("Alexander Johansson", R.drawable.alex));
@@ -72,22 +53,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         pagerAdapter = new FragmentClassAdapter(getSupportFragmentManager(), fragmentList);
+        final ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
 
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
 
-        ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
+            public void onPageScrolled(int i, float v, int i1) {
+                Log.i("Scroll", "Scrolling");
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                currentPage = i;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
         pager.setAdapter(pagerAdapter);
-
-    }
-
-    private void infoBtnClicked() {
-        btnInfo.setText("Indeed");
-    }
-
-    class infoBtnClick implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-
-            btnInfoClicked();
-        }
     }
 }
+
