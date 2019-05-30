@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnInfo;
     FragmentClassAdapter pagerAdapter;
     int currentPage = 0;
+    String str = "text";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +32,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnInfo = (Button) findViewById(R.id.btnInfo);
+        TextView editText = (TextView) findViewById(R.id.editText);
+
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                 intent.putExtra("ID",currentPage);
+                String text = str.putExtra().toString();
                 startActivity(intent);
             }
         });
 
+
+        final List<Fragment> fragmentList1 = new ArrayList<>();
+
+        fragmentList1.add(FragmentClass.newInstance("Alexander Johansson, 60 years old, North Korean spy", 0));
+        fragmentList1.add(FragmentClass.newInstance("Adriana Larsson, married to Chuck Norris", 1));
+        fragmentList1.add(FragmentClass.newInstance("David (Bitch & Snitch) Hjorth, sells ass", 2));
+        fragmentList1.add(FragmentClass.newInstance("Edgar Palic, mob boss", 3));
+        fragmentList1.add(FragmentClass.newInstance("Eric Hedrenius, adviser to Donald Trump ", 4));
+        fragmentList1.add(FragmentClass.newInstance("Faisal Akhtar, uranium dealer", 5));
+        fragmentList1.add(FragmentClass.newInstance("Jonathan Vahlberg, hacks and plants viruses to computers worldwide", 6));
+        fragmentList1.add(FragmentClass.newInstance("Sano Gharzani, strives for world domination", 7));
+
+
+
         final List<Fragment> fragmentList = new ArrayList<Fragment>();
 
-        fragmentList.add(FragmentClass.newInstance("Adriana Larsson", R.drawable.adriana));
         fragmentList.add(FragmentClass.newInstance("Alexander Johansson", R.drawable.alex));
+        fragmentList.add(FragmentClass.newInstance("Adriana Larsson", R.drawable.adriana));
         fragmentList.add(FragmentClass.newInstance("David Hjorth", R.drawable.david));
         fragmentList.add(FragmentClass.newInstance("Edgar Palic", R.drawable.edgar));
         fragmentList.add(FragmentClass.newInstance("Erik Hedrenius", R.drawable.erik));
@@ -63,10 +83,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageSelected(int i) {
-                currentPage = i;
+            public void onPageSelected(int i) { currentPage = i; str = "text";
             }
-
             @Override
             public void onPageScrollStateChanged(int i) {
 
