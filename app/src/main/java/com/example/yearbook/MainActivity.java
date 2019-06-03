@@ -1,6 +1,8 @@
 package com.example.yearbook;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import java.util.List;
 import static com.example.yearbook.FragmentClass.MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
+
 
     private Button btnInfo;
     FragmentClassAdapter pagerAdapter;
@@ -49,14 +52,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        fragmentList1.add(FragmentClass.newInstance("Alexander Johansson, 60 years old, North Korean spy", 0));
-        fragmentList1.add(FragmentClass.newInstance("Adriana Larsson, married to Chuck Norris", 1));
-        fragmentList1.add(FragmentClass.newInstance("David (Bitch & Snitch) Hjorth, sells a$$", 2));
-        fragmentList1.add(FragmentClass.newInstance("Edgar Palic, denna vecka på efterlyst!", 3));
-        fragmentList1.add(FragmentClass.newInstance("Eric Hedrenius, adviser to Donald Trump ", 4));
-        fragmentList1.add(FragmentClass.newInstance("Faisal Akhtar, uranium dealer", 5));
-        fragmentList1.add(FragmentClass.newInstance("Jonathan Vahlberg, hacks computers worldwide", 6));
-        fragmentList1.add(FragmentClass.newInstance("Sano Gharzani, strives for world domination", 7));
+
+        fragmentList1.add(FragmentClass.newInstance("", 0));
+        fragmentList1.add(FragmentClass.newInstance("", 1));
+        fragmentList1.add(FragmentClass.newInstance("", 2));
+        fragmentList1.add(FragmentClass.newInstance("", 3));
+        fragmentList1.add(FragmentClass.newInstance("", 4));
+        fragmentList1.add(FragmentClass.newInstance("", 5));
+        fragmentList1.add(FragmentClass.newInstance("", 6));
+        fragmentList1.add(FragmentClass.newInstance("", 7));
 
         fragmentList.add(FragmentClass.newInstance("Alexander Johansson", R.drawable.alex));
         fragmentList.add(FragmentClass.newInstance("Adriana Larsson", R.drawable.adriana));
@@ -71,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = new FragmentClassAdapter(getSupportFragmentManager(), fragmentList);
         pager.setAdapter(pagerAdapter);
 
-
-        /*editAdapter = new FragmentClassAdapter(getSupportFragmentManager(), fragmentList1);
-        final TextView text = (TextView) findViewById(R.id.editText);*/
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -90,8 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 }
 
